@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cesium Fluoride — Market Intelligence & Feasibility Report</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; padding: 0; display: flex; min-height: 100vh; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; background: #f0f2f5; }
+
+/* SIDEBAR */
+.sidebar { width: 260px; min-width: 260px; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; background: #0d1b2a; z-index: 100; display: flex; flex-direction: column; }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: #1b3a5c; border-radius: 2px; }
+.sidebar-brand { padding: 22px 18px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.sidebar-brand .brand-tag { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #4fc3f7; font-weight: 700; }
+.sidebar-brand .brand-product { font-size: 16px; font-weight: 700; color: #fff; margin: 6px 0 4px; line-height: 1.25; }
+.sidebar-brand .brand-sub { font-size: 10px; color: #78909c; }
+.sidebar-meta { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.meta-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #546e7a; }
+.meta-value { font-size: 10.5px; color: #b0bec5; font-weight: 600; }
+.sidebar-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.3px; }
+.badge-approved { background: #1b5e20; color: #a5d6a7; border: 1px solid #388e3c; }
+.badge-mode { background: #01579b; color: #b3e5fc; border: 1px solid #0288d1; }
+.badge-regulated { background: #1a237e; color: #90caf9; border: 1px solid #3949ab; }
+.badge-warning { background: #e65100; color: #ffe0b2; border: 1px solid #ef6c00; }
+
+.confidential-notice { margin: 12px 10px 16px 10px; padding: 10px 12px; background: rgba(255,193,7,0.12); border: 1px solid rgba(255,193,7,0.35); border-radius: 6px; }
+.conf-title { color: #ffc107; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 5px; }
+.conf-text { color: #b0bec5; font-size: 9.5px; line-height: 1.45; }
+
+.sidebar-nav { flex: 1; padding: 10px 0; }
+.nav-section-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: #37474f; padding: 10px 18px 5px; font-weight: 700; }
+.nav-link { display: flex; align-items: center; padding: 8px 18px; color: #78909c; font-size: 11.5px; text-decoration: none; transition: all 0.2s; border-left: 3px solid transparent; }
+.nav-link:hover, .nav-link.active { color: #e1f5fe; background: rgba(79,195,247,0.08); border-left-color: #4fc3f7; }
+.nav-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 5px; background: rgba(255,255,255,0.06); color: #4fc3f7; font-size: 9px; font-weight: 700; margin-right: 10px; flex-shrink: 0; }
+.sidebar-footer { padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.06); }
+.btn-pdf { width: 100%; padding: 10px; border: none; border-radius: 8px; background: linear-gradient(135deg, #1565c0, #0d47a1); color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: transform 0.15s; }
+.btn-pdf:hover { transform: translateY(-1px); }
+
+/* MAIN CONTENT */
+.main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; background: #f0f2f5; }
+
+/* HERO */
+.hero { background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #0d47a1 100%); color: #fff; padding: 48px 44px 40px; }
+.hero-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #4fc3f7; font-weight: 700; margin-bottom: 10px; }
+.hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; line-height: 1.15; }
+.hero-desc { font-size: 14px; color: #b0bec5; margin-bottom: 18px; max-width: 700px; line-height: 1.6; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.hero-chip { display: inline-flex; align-items: center; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #e0e0e0; }
+.hero-chip span { color: #4fc3f7; margin-right: 6px; font-size: 10px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+.kpi-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; backdrop-filter: blur(8px); }
+.kpi-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.8px; color: #78909c; margin-bottom: 6px; }
+.kpi-value { font-size: 20px; font-weight: 800; }
+.kpi-sub { font-size: 10px; color: #78909c; margin-top: 3px; }
+.kpi-green { color: #66bb6a; }
+.kpi-amber { color: #ffa726; }
+.kpi-blue { color: #42a5f5; }
+.kpi-red { color: #ef5350; }
+
+/* REPORT TYPE BADGE */
+.report-type-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 6px; background: rgba(79,195,247,0.12); border: 1px solid rgba(79,195,247,0.3); color: #b3e5fc; font-size: 11px; font-weight: 600; margin-bottom: 20px; }
+
+/* SECTIONS */
+.report-section { padding: 36px 44px; }
+.section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.section-num { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 8px; background: #1565c0; color: #fff; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+.section-title { font-size: 20px; font-weight: 700; color: #0d1b2a; }
+.section-title em { font-style: normal; color: #1565c0; }
+
+/* CARDS */
+.card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 20px; overflow: hidden; }
+.card-header { padding: 16px 22px; border-left: 4px solid #1565c0; font-size: 14px; font-weight: 700; color: #0d1b2a; background: #fafbfc; border-bottom: 1px solid #eee; }
+.card-body { padding: 20px 22px; }
+.card-body p { font-size: 13.5px; line-height: 1.7; color: #37474f; margin-bottom: 12px; }
+
+/* TABLES */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table th { background: #1565c0; color: #fff; padding: 10px 14px; text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+table td { padding: 10px 14px; border-bottom: 1px solid #e8eaed; color: #37474f; vertical-align: top; line-height: 1.5; }
+table tr:nth-child(even) { background: #f8f9fa; }
+table tr:hover { background: #e3f2fd; }
+table tr.india-row { background: #fff8e1 !important; border-left: 3px solid #f9a825; }
+table tr.india-row:hover { background: #fff3c4 !important; }
+.src { font-size: 9.5px; color: #90a4ae; display: block; margin-top: 3px; word-break: break-all; }
+.src a { color: #1565c0; text-decoration: none; }
+
+/* PROPERTY GRID */
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.prop-item { padding: 12px 14px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e8eaed; }
+.prop-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.6px; color: #78909c; margin-bottom: 4px; }
+.prop-value { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+
+/* SWOT */
+.swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 10px; overflow: hidden; }
+.swot-cell { padding: 18px; color: #fff; }
+.swot-cell h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; opacity: 0.9; }
+.swot-cell ul { padding-left: 16px; font-size: 12.5px; line-height: 1.7; }
+.swot-s { background: #1b5e20; }
+.swot-w { background: #b71c1c; }
+.swot-o { background: #1565c0; }
+.swot-t { background: #e65100; }
+
+/* PORTER */
+.porter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.porter-card { border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid #e8eaed; }
+.porter-top { padding: 6px; }
+.porter-high { background: #ef5350; }
+.porter-med { background: #ffa726; }
+.porter-low { background: #66bb6a; }
+.porter-body { padding: 14px; }
+.porter-body h4 { font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #1a1a2e; }
+.porter-body p { font-size: 11.5px; color: #546e7a; line-height: 1.5; }
+.porter-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #fff; text-align: center; letter-spacing: 0.5px; }
+
+/* VALUE CHAIN */
+.vc-flow { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 20px; }
+.vc-step { flex: 1; min-width: 100px; padding: 14px 10px; text-align: center; font-size: 11px; font-weight: 600; border-radius: 6px; color: #fff; position: relative; }
+.vc-active { background: #1565c0; }
+.vc-inactive { background: #90a4ae; }
+
+/* RECOMMENDATION */
+.verdict-box { padding: 24px; border-radius: 10px; color: #fff; text-align: center; margin-bottom: 20px; }
+.verdict-recommended { background: linear-gradient(135deg, #1b5e20, #2e7d32); }
+.verdict-conditional { background: linear-gradient(135deg, #e65100, #ef6c00); }
+.verdict-not { background: linear-gradient(135deg, #b71c1c, #c62828); }
+.verdict-box h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.verdict-box p { font-size: 13px; opacity: 0.92; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+/* TAGS */
+.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; }
+.tag-green { background: #e8f5e9; color: #1b5e20; }
+.tag-amber { background: #fff3e0; color: #e65100; }
+.tag-red { background: #ffebee; color: #b71c1c; }
+.tag-blue { background: #e3f2fd; color: #0d47a1; }
+.tag-gray { background: #eceff1; color: #546e7a; }
+
+/* ALERT BOXES */
+.alert { padding: 14px 18px; border-radius: 8px; font-size: 12.5px; line-height: 1.6; margin-bottom: 16px; }
+.alert-info { background: #e3f2fd; border-left: 4px solid #1565c0; color: #0d47a1; }
+.alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; }
+.alert-warning { background: #fff3e0; border-left: 4px solid #e65100; color: #bf360c; }
+.alert-danger { background: #ffebee; border-left: 4px solid #b71c1c; color: #b71c1c; }
+
+/* STEPS */
+.steps-list { counter-reset: steps; }
+.step-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+.step-num { counter-increment: steps; width: 36px; height: 36px; border-radius: 50%; background: #1565c0; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.step-content h4 { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
+.step-content p { font-size: 12px; color: #546e7a; line-height: 1.5; }
+
+/* REFERENCES */
+.ref-list { counter-reset: refs; list-style: none; padding: 0; }
+.ref-list li { counter-increment: refs; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; color: #546e7a; line-height: 1.5; }
+.ref-list li::before { content: "[" counter(refs) "]"; font-weight: 700; color: #1565c0; margin-right: 10px; }
+.ref-list li a { color: #1565c0; text-decoration: none; word-break: break-all; }
+
+/* FOOTER */
+.report-footer { background: #0d1b2a; color: #78909c; padding: 30px 44px; font-size: 10.5px; line-height: 1.6; }
+.report-footer strong { color: #ffc107; }
+
+/* PRINT */
+@media print {
+  body { display: block; }
+  .sidebar { position: relative; width: 100%; min-width: 100%; height: auto; page-break-after: always; }
+  .main-content { margin-left: 0; width: 100%; }
+  .card, table, .swot-grid, .porter-grid, .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .btn-pdf { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-tag">Market Intelligence Report</div>
+    <div class="brand-product">Cesium Fluoride (CsF)</div>
+    <div class="brand-sub">CAS 13400-13-0 | MW 151.90</div>
+  </div>
+  <div class="sidebar-meta">
+    <div class="meta-row"><span class="meta-label">Report Date</span><span class="meta-value">June 2026</span></div>
+    <div class="meta-row"><span class="meta-label">CAS Number</span><span class="meta-value">13400-13-0</span></div>
+    <div class="meta-row"><span class="meta-label">HS Code (India)</span><span class="meta-value">2827.60.90</span></div>
+    <div style="margin-top:8px;">
+      <span class="sidebar-badge badge-mode">Secondary Research Only</span>
+    </div>
+    <div style="margin-top:6px;">
+      <span class="sidebar-badge badge-regulated">TSCA Listed</span>
+    </div>
+    <div style="margin-top:6px;">
+      <span class="sidebar-badge badge-warning">Critical Mineral Supply</span>
+    </div>
+  </div>
+  <div class="confidential-notice">
+    <div class="conf-title">🔒 CONFIDENTIAL</div>
+    <div class="conf-text">For Internal Management Use Only. Based on publicly available secondary research. Market size estimates from third-party sources may vary. Not investment or financial advice.</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Report Sections</div>
+    <a href="#s01" class="nav-link" data-section="s01"><span class="nav-num">01</span> Product Overview</a>
+    <a href="#s02" class="nav-link" data-section="s02"><span class="nav-num">02</span> Synthesis & Mfg</a>
+    <a href="#s03" class="nav-link" data-section="s03"><span class="nav-num">03</span> Applications</a>
+    <a href="#s04" class="nav-link" data-section="s04"><span class="nav-num">04</span> Market Analysis</a>
+    <a href="#s05" class="nav-link" data-section="s05"><span class="nav-num">05</span> News & Intel</a>
+    <a href="#s06" class="nav-link" data-section="s06"><span class="nav-num">06</span> Pricing Intel</a>
+    <a href="#s07" class="nav-link" data-section="s07"><span class="nav-num">07</span> Regulatory</a>
+    <a href="#s08" class="nav-link" data-section="s08"><span class="nav-num">08</span> Target Customers</a>
+    <a href="#s09" class="nav-link" data-section="s09"><span class="nav-num">09</span> Strategic Frameworks</a>
+    <a href="#s10" class="nav-link" data-section="s10"><span class="nav-num">10</span> Feasibility</a>
+    <a href="#refs" class="nav-link"><span class="nav-num">R</span> References</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-pdf" onclick="window.print()">⬇ Download PDF</button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Market Intelligence & Feasibility Report</div>
+  <div class="report-type-badge">📊 Report Type: Secondary Market Research — No Trade Data</div>
+  <h1>Cesium Fluoride (CsF)</h1>
+  <p class="hero-desc">Comprehensive market intelligence assessment for cesium fluoride — a critical inorganic fluoride reagent with strategic applications in organic synthesis, optics, semiconductors, and advanced materials. Prepared for senior management decision-making on India-centric business opportunities.</p>
+  <div class="hero-badges">
+    <span class="hero-chip"><span>CAS</span> 13400-13-0</span>
+    <span class="hero-chip"><span>MW</span> 151.90 g/mol</span>
+    <span class="hero-chip"><span>Formula</span> CsF</span>
+    <span class="hero-chip"><span>PubChem</span> CID 25953</span>
+    <span class="hero-chip"><span>Use</span> Organic Synthesis</span>
+    <span class="hero-chip"><span>Use</span> Optics & IR Windows</span>
+    <span class="hero-chip"><span>Use</span> Semiconductor Fab</span>
+    <span class="hero-chip"><span>Supply</span> Critical Mineral</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Global CsF Market (2024)</div>
+      <div class="kpi-value kpi-blue">~$146 MN</div>
+      <div class="kpi-sub">Projected $198 MN by 2030</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CAGR (2024–2030)</div>
+      <div class="kpi-value kpi-green">5.3%</div>
+      <div class="kpi-sub">24ChemicalResearch est.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">India Import Dependency</div>
+      <div class="kpi-value kpi-amber">>90%</div>
+      <div class="kpi-sub">No primary Cs mining</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Supply Concentration</div>
+      <div class="kpi-value kpi-red">HIGH RISK</div>
+      <div class="kpi-sub">China + Canada dominate</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Key Application</div>
+      <div class="kpi-value kpi-blue">Fluorination</div>
+      <div class="kpi-sub">Pharma / Agrochemicals</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Recommendation</div>
+      <div class="kpi-value kpi-green">CONDITIONAL</div>
+      <div class="kpi-sub">Import + CRO focus</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 01 -->
+<section id="s01" class="report-section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Product Overview & <em>Identity</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Chemical Identity</div>
+    <div class="card-body">
+      <p>Cesium fluoride (CsF), also spelled caesium fluoride, is an inorganic ionic compound composed of cesium cations (Cs⁺) and fluoride anions (F⁻). It is the most electropositive metal combined with the most electronegative element, resulting in the highest ionic character among commonly available alkali metal halides. This makes CsF a uniquely reactive source of "naked" fluoride ion in organic chemistry — significantly more effective than NaF or KF for nucleophilic fluorination reactions. CsF is extensively used as a strong, non-nucleophilic base and fluoride-ion source in pharmaceutical synthesis, cross-coupling reactions (Suzuki, Stille, Hiyama), and desilylation chemistry.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th style="width:220px;">Property</th><th>Value</th><th>Source</th></tr>
+          <tr><td>IUPAC Name</td><td>Cesium fluoride</td><td><span class="src"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cesium-fluoride">PubChem CID 25953</a></span></td></tr>
+          <tr><td>CAS Number</td><td>13400-13-0</td><td><span class="src"><a href="https://www.sigmaaldrich.com/US/en/substance/cesiumfluoride1519013400130">Sigma-Aldrich</a></span></td></tr>
+          <tr><td>Molecular Formula</td><td>CsF</td><td><span class="src"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cesium-fluoride">PubChem</a></span></td></tr>
+          <tr><td>Molecular Weight</td><td>151.90 g/mol</td><td><span class="src"><a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=13400-13-0">NIST WebBook</a></span></td></tr>
+          <tr><td>PubChem CID</td><td>25953</td><td><span class="src"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cesium-fluoride">PubChem</a></span></td></tr>
+          <tr><td>InChI Key</td><td>XJHCXCQVJFPJIK-UHFFFAOYSA-M</td><td><span class="src"><a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C13400130">NIST</a></span></td></tr>
+          <tr><td>SMILES</td><td>[F-].[Cs+]</td><td><span class="src"><a href="https://www.scbt.com/p/cesium-fluoride-13400-13-0">SCBT</a></span></td></tr>
+          <tr><td>EC Number</td><td>236-487-3</td><td><span class="src"><a href="https://www.sigmaaldrich.com/US/en/product/aldrich/289345">Sigma-Aldrich</a></span></td></tr>
+          <tr><td>MDL Number</td><td>MFCD00010960</td><td><span class="src"><a href="https://www.sigmaaldrich.com/US/en/product/aldrich/289345">Sigma-Aldrich</a></span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Physical & Chemical Properties</div>
+    <div class="card-body">
+      <div class="prop-grid">
+        <div class="prop-item"><div class="prop-label">Appearance</div><div class="prop-value">White crystalline powder</div></div>
+        <div class="prop-item"><div class="prop-label">Physical State</div><div class="prop-value">Solid (hygroscopic)</div></div>
+        <div class="prop-item"><div class="prop-label">Melting Point</div><div class="prop-value">682 °C</div></div>
+        <div class="prop-item"><div class="prop-label">Boiling Point</div><div class="prop-value">1,251 °C</div></div>
+        <div class="prop-item"><div class="prop-label">Density</div><div class="prop-value">4.115 g/cm³ (25 °C)</div></div>
+        <div class="prop-item"><div class="prop-label">Refractive Index</div><div class="prop-value">1.478 (18 °C)</div></div>
+        <div class="prop-item"><div class="prop-label">Solubility in Water</div><div class="prop-value">~1,500 g/L (25 °C) — very high</div></div>
+        <div class="prop-item"><div class="prop-label">Solubility (Other)</div><div class="prop-value">Sol. in MeOH, EtOH; insol. in dioxane</div></div>
+        <div class="prop-item"><div class="prop-label">Flash Point</div><div class="prop-value">Not applicable (inorganic salt)</div></div>
+        <div class="prop-item"><div class="prop-label">Storage</div><div class="prop-value">Sealed, 2–10 °C, avoid moisture</div></div>
+        <div class="prop-item"><div class="prop-label">Crystal Structure</div><div class="prop-value">Rock salt (NaCl-type, cubic)</div></div>
+        <div class="prop-item"><div class="prop-label">Hazard Class</div><div class="prop-value">Class I designated chemical</div></div>
+      </div>
+      <p style="margin-top:14px; font-size:11.5px; color:#546e7a;">Sources: Sigma-Aldrich, SYNTHETIKA, Wiley Encyclopedia of Reagents, NIST WebBook</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Product Grades Available</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Grade</th><th>Purity</th><th>Primary Use</th><th>Supplier Example</th></tr>
+          <tr><td>Standard / Puriss</td><td>≥98.0%</td><td>General synthesis, industrial</td><td>Sigma-Aldrich (purum p.a.)</td></tr>
+          <tr><td>High Purity</td><td>99%</td><td>Organic synthesis, cross-coupling</td><td>Sigma-Aldrich, Alfa Aesar</td></tr>
+          <tr><td>Trace Metals Basis</td><td>99.9%</td><td>Electronics, advanced synthesis</td><td>Sigma-Aldrich, American Elements</td></tr>
+          <tr><td>Ultra-High Purity</td><td>99.99%</td><td>Optical coatings, sputtering targets</td><td>Stanford Advanced Materials</td></tr>
+          <tr><td>BioUltra</td><td>≥99.0% (F)</td><td>Biochemistry, analytical</td><td>Sigma-Aldrich (BioUltra)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">HS Codes</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Jurisdiction</th><th>HS Code</th><th>Description</th></tr>
+          <tr class="india-row"><td>🇮🇳 India (ITC-HS)</td><td>2827.60.90</td><td>Other fluorides — Cesium fluoride falls under "other fluorides" (not NaF, AlF₃ specific)</td></tr>
+          <tr><td>International (WCO)</td><td>2827.60</td><td>Fluorides: Other</td></tr>
+        </table>
+      </div>
+      <div class="alert alert-warning" style="margin-top:12px;">
+        ⚠️ <strong>Customs Note:</strong> India BCD on HS 2827.60.90 is ~10%. IGST 5%. Total landed duty ~15.5%. CsF is not separately enumerated — always confirm with customs broker. Cesium is listed as a critical mineral by US DOI (2021).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02 -->
+<section id="s02" class="report-section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Synthesis & <em>Manufacturing</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Key Synthesis Routes</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>#</th><th>Route Name</th><th>Starting Materials</th><th>Key Conditions</th><th>Yield</th><th>Reference</th></tr>
+          <tr><td>1</td><td>Acid-Base Neutralization <span class="tag tag-green">Primary</span></td><td>Cesium hydroxide (CsOH) + Hydrofluoric acid (HF)</td><td>Aqueous, ambient to mild heating; recrystallization from water for purification</td><td>~95%</td><td><span class="src"><a href="https://en.wikipedia.org/wiki/Caesium_fluoride">Wikipedia — CsF</a></span></td></tr>
+          <tr><td>2</td><td>Carbonate Route</td><td>Cesium carbonate (Cs₂CO₃) + HF</td><td>Aqueous, CO₂ evolved; filtration and evaporation</td><td>~90%</td><td><span class="src"><a href="https://www.chemicalbook.com/ChemicalProductProperty_EN_CB5122877.htm">ChemicalBook</a></span></td></tr>
+          <tr><td>3</td><td>Chloride Metathesis</td><td>Cesium chloride (CsCl) + AgF or NaF (molten salt exchange)</td><td>High temp metathesis; less common, lower yield</td><td>~75%</td><td><span class="src">General inorganic synthesis</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Key Raw Materials</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Material</th><th>Source / Origin</th><th>India Availability</th><th>Relevance</th></tr>
+          <tr><td>Cesium hydroxide (CsOH)</td><td>Derived from pollucite ore processing; China, Canada</td><td><span class="tag tag-red">Imported specialty</span></td><td>Route 1 (primary)</td></tr>
+          <tr><td>Cesium carbonate (Cs₂CO₃)</td><td>China (Jiangxi Dongpeng, Hangzhou Baosyn), Germany</td><td><span class="tag tag-amber">Importable</span></td><td>Route 2</td></tr>
+          <tr><td>Hydrofluoric acid (HF)</td><td>Global availability, India manufacturers present (Gujarat Fluorochemicals, Navin Fluorine)</td><td><span class="tag tag-green">Widely available</span></td><td>Routes 1 & 2</td></tr>
+          <tr><td>Pollucite ore (Cs₂Al₂Si₄O₁₂·H₂O)</td><td>Tanco Mine (Canada), Bikita (Zimbabwe), China deposits</td><td><span class="tag tag-red">Not available domestically</span></td><td>Upstream feedstock for all Cs compounds</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Manufacturing Complexity Assessment</div>
+    <div class="card-body">
+      <div class="prop-grid">
+        <div class="prop-item"><div class="prop-label">Complexity Rating</div><div class="prop-value"><span class="tag tag-amber">MEDIUM</span></div></div>
+        <div class="prop-item"><div class="prop-label">Key Challenge</div><div class="prop-value">Raw material scarcity — cesium compounds</div></div>
+        <div class="prop-item"><div class="prop-label">HF Handling</div><div class="prop-value">Requires specialized HF-rated equipment</div></div>
+        <div class="prop-item"><div class="prop-label">Purity Control</div><div class="prop-value">Hygroscopic — needs inert atmosphere packaging</div></div>
+      </div>
+      <div class="alert alert-success" style="margin-top:14px;">
+        🇮🇳 <strong>India Strategic Note:</strong> Synthesis itself is straightforward (acid-base reaction), but India has zero domestic cesium ore production. All cesium precursors must be imported. India's strength lies in HF availability (Navin Fluorine, Gujarat Fluorochemicals) and strong pharma/chemical manufacturing infrastructure for downstream conversion and formulation. A CsF toll-manufacturing operation using imported Cs₂CO₃ is feasible with existing Indian infrastructure.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 -->
+<section id="s03" class="report-section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Applications, End-Products & <em>Application Market Sizes</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">1. Organic Synthesis & Pharmaceutical Intermediates</div>
+    <div class="card-body">
+      <p>CsF is a premier reagent for nucleophilic fluorination, desilylation, and cross-coupling reactions in pharmaceutical synthesis. It provides a highly dissociated, non-nucleophilic fluoride source that operates under milder conditions than KF. Approximately 50% of new drug molecules in pharma R&D pipelines contain fluorine atoms, driving continuous demand for efficient fluorination reagents.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>End-Product / Process</th><th>Details</th><th>Key Companies</th></tr>
+          <tr><td>Fluorinated pharma intermediates</td><td>Nucleophilic fluorination of halides & sulfonates; SNAr reactions</td><td>Pfizer, Merck, GSK, Novartis, Divi's Labs</td></tr>
+          <tr><td>Suzuki cross-coupling</td><td>Base for Pd-catalyzed biaryl synthesis — ortho-substituted biaryls</td><td>Academic labs, CRO/CDMOs globally</td></tr>
+          <tr><td>Stille coupling</td><td>CsF activator for organotin reagents</td><td>Pharma R&D globally</td></tr>
+          <tr><td>Desilylation reactions</td><td>Removal of TMS/TIPS protecting groups under mild conditions</td><td>All synthetic chemistry labs</td></tr>
+        </table>
+      </div>
+      <div class="tbl-wrap" style="margin-top:12px;">
+        <table>
+          <tr><th>Market Segment</th><th>Global Market Size</th><th>CAGR</th><th>Source</th></tr>
+          <tr><td>Fluorinated Pharmaceuticals (overall)</td><td>~$58 BN (2024)</td><td>6–8%</td><td><span class="src">Industry estimates, multiple reports</span></td></tr>
+          <tr><td>Fluorination Reagents (specialty)</td><td>~$1.2 BN (2024)</td><td>5.5%</td><td><span class="src">Specialty chemical market estimates</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">2. Optics, Photonics & IR Applications</div>
+    <div class="card-body">
+      <p>CsF crystals have high transparency in the UV to IR range, making them valuable for optical windows, lenses, and coatings in precision instruments, defense optics, and telecommunications equipment. CsF thin films produced via sputtering or evaporation deposition are used for anti-reflective coatings.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Market Segment</th><th>Global Market Size</th><th>CAGR</th><th>Source</th></tr>
+          <tr><td>CsF Sputtering Targets</td><td>~$251 MN (2023)</td><td>12.8%</td><td><span class="src"><a href="https://www.verifiedmarketreports.com/product/cesium-fluoride-sputtering-target-market/">Verified Market Reports</a></span></td></tr>
+          <tr><td>Optical Coatings (overall)</td><td>~$15 BN (2024)</td><td>7–9%</td><td><span class="src">Industry estimates</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">3. Electronics & Semiconductor Fabrication</div>
+    <div class="card-body">
+      <p>CsF is used in semiconductor thin-film deposition for advanced electronic components. Its thermal stability and favorable optical/electrical properties make it suitable for next-generation semiconductor processes. Also used in scintillator fabrication for radiation detection in medical imaging and security.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Market Segment</th><th>Global Market Size</th><th>CAGR</th><th>Source</th></tr>
+          <tr><td>Global Semiconductor Materials</td><td>~$67 BN (2024)</td><td>5–7%</td><td><span class="src">Industry estimates (SEMI)</span></td></tr>
+          <tr><td>Scintillator Materials</td><td>~$0.6 BN (2024)</td><td>5.2%</td><td><span class="src">Specialty materials estimates</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">4. Nuclear & Advanced Materials Research</div>
+    <div class="card-body">
+      <p>CsF is used in nuclear research applications, advanced materials synthesis (e.g., Dion-Jacobson phase CsLaTa₂O₇ for photocatalysis and superconductivity), and as an inorganic scintillator. Demand grows as nuclear energy expands in Asia and the Middle East.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">5. Catalysis & Specialty Glass</div>
+    <div class="card-body">
+      <p>CsF serves as a catalyst/promoter in oxidation reactions (when adsorbed onto Celite) and as an additive in specialty optical glass manufacturing to enhance refractive properties. It is also used in aluminum brazing flux formulations.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">6. Reference Standards & Analytical Chemistry</div>
+    <div class="card-body">
+      <p>Used as a reference standard in NMR spectroscopy and as an analytical reagent. Always a baseline demand segment for research-grade CsF across academic and industrial R&D labs globally.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04 -->
+<section id="s04" class="report-section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Market <em>Analysis</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">4A — Global CsF Market</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Parameter</th><th>Value</th><th>Source</th></tr>
+          <tr><td>Global CsF Market Size (2024)</td><td>~US$ 145.6 MN</td><td><span class="src"><a href="https://www.24chemicalresearch.com/blog/747/global-cesium-fluoride-forecast-edition-market">24ChemicalResearch</a></span></td></tr>
+          <tr><td>Projected Size (2030)</td><td>~US$ 198.4 MN</td><td><span class="src">24ChemicalResearch</span></td></tr>
+          <tr><td>CAGR (2024–2030)</td><td>5.3%</td><td><span class="src">24ChemicalResearch</span></td></tr>
+          <tr><td>Alternate Estimate (2023)</td><td>~US$ 320 MN</td><td><span class="src"><a href="https://dataintelo.com/report/cesium-fluoride-industry">Dataintelo</a></span></td></tr>
+          <tr><td>Alternate Forecast (2032)</td><td>~US$ 450 MN</td><td><span class="src">Dataintelo</span></td></tr>
+          <tr><td>USA Market (2024)</td><td>~US$ 38.2 MN</td><td><span class="src">24ChemicalResearch</span></td></tr>
+          <tr><td>Key Growth Drivers</td><td>Optics/photonics, semiconductor fab, pharma fluorination, nuclear research, aerospace/defense</td><td><span class="src">Multiple sources</span></td></tr>
+        </table>
+      </div>
+      <div class="alert alert-info" style="margin-top:12px;">
+        ℹ️ <strong>Market Size Variance Note:</strong> Multiple market reports quote significantly different numbers ($146 MN vs $320 MN). This variance is common in specialty chemicals — it depends on whether only CsF is counted or if CsF derivatives and sputtering targets are included. We use the lower, more conservative estimate for CsF compound alone.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">4B — India Market</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Parameter</th><th>Value</th><th>Source</th></tr>
+          <tr class="india-row"><td>🇮🇳 Domestic CsF Production</td><td>Minimal — no primary cesium mining in India</td><td>USGS MCS 2025</td></tr>
+          <tr class="india-row"><td>🇮🇳 Import Dependency</td><td>>90% — all cesium compounds imported (primarily from China, Germany)</td><td>Trade data estimates, USGS</td></tr>
+          <tr class="india-row"><td>🇮🇳 India Fluorochemicals Market (2022)</td><td>~US$ 622 MN (overall fluorochemicals)</td><td><span class="src"><a href="https://www.marknteladvisors.com/research-library/india-fluorochemicals-market.html">MarkNtel</a></span></td></tr>
+          <tr class="india-row"><td>🇮🇳 India Fluorochemicals CAGR</td><td>~10.2% (2024–29)</td><td><span class="src">MarkNtel</span></td></tr>
+          <tr class="india-row"><td>🇮🇳 Key Consuming Clusters</td><td>Mumbai-Pune (pharma), Hyderabad (API/CDMO), Ahmedabad (fluorochemicals), Bengaluru (biotech CRO), Chennai (specialty chem)</td><td>Industry knowledge</td></tr>
+          <tr class="india-row"><td>🇮🇳 Demand Drivers</td><td>Growing pharma CDMO sector, PLI scheme for APIs, semiconductor fab investments (ISMC, Vedanta-Foxconn plans), defense optics</td><td>Industry knowledge</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">4C — Major Manufacturing Countries</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Country</th><th>Role</th><th>Est. Share</th><th>Notes</th></tr>
+          <tr><td>🇨🇳 China</td><td>Dominant refiner + manufacturer</td><td><span class="tag tag-red">>60%</span></td><td>Controls bulk of cesium salt refining; Sinomine Group; Jiangxi Dongpeng; Anhui Fitech</td></tr>
+          <tr><td>🇨🇦 Canada</td><td>Primary ore supplier (Tanco Mine)</td><td><span class="tag tag-amber">15–20%</span></td><td>Tanco Mine (Sinomine-owned) is world's largest pollucite deposit; intermittent production</td></tr>
+          <tr><td>🇺🇸 USA</td><td>Specialty chemicals & high-purity</td><td><span class="tag tag-blue">10–15%</span></td><td>American Elements, Stanford Advanced Materials — high-purity grades</td></tr>
+          <tr><td>🇩🇪 Germany</td><td>Refined chemicals supplier</td><td><span class="tag tag-blue">5–8%</span></td><td>Merck KGaA, Thermo Fisher (Alfa Aesar heritage)</td></tr>
+          <tr class="india-row"><td>🇮🇳 India</td><td>Redistribution + small-scale synthesis</td><td><span class="tag tag-gray"><2%</span></td><td>CDH, Loba Chemie, Otto Chemie, Sihauli Chemicals — mostly repackaging imported material</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">4D — Major Global Manufacturers & Suppliers</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Company</th><th>Country</th><th>Role</th><th>Website</th></tr>
+          <tr><td>Sinomine Resource Group</td><td>🇨🇳 China</td><td>Integrated miner + refiner (owns Tanco Mine)</td><td>sinomine.com</td></tr>
+          <tr><td>American Elements</td><td>🇺🇸 USA</td><td>High-purity CsF manufacturer</td><td><a href="https://www.americanelements.com/cesium-fluoride-13400-13-0">americanelements.com</a></td></tr>
+          <tr><td>Stanford Advanced Materials</td><td>🇺🇸 USA</td><td>CsF powder + sputtering targets</td><td><a href="https://www.samaterials.com/cesium-fluoride-csf.html">samaterials.com</a></td></tr>
+          <tr><td>Thermo Fisher / Alfa Aesar</td><td>🇺🇸/🇩🇪</td><td>Research-grade CsF</td><td><a href="https://www.alfa.com/en/catalog/012885/">alfa.com</a></td></tr>
+          <tr><td>Sigma-Aldrich (Merck KGaA)</td><td>🇩🇪 Germany</td><td>Research & BioUltra grades</td><td><a href="https://www.sigmaaldrich.com/US/en/substance/cesiumfluoride1519013400130">sigmaaldrich.com</a></td></tr>
+          <tr><td>Jiangxi Dongpeng New Materials</td><td>🇨🇳 China</td><td>Bulk manufacturer</td><td>Made-in-China listing</td></tr>
+          <tr><td>Anhui Fitech Materials</td><td>🇨🇳 China</td><td>Cesium compounds manufacturer</td><td>us.metoree.com</td></tr>
+          <tr><td>MTI Corporation</td><td>🇺🇸 USA</td><td>Sputtering targets</td><td>mtixtl.com</td></tr>
+          <tr class="india-row"><td>🇮🇳 Loba Chemie</td><td>India (Mumbai)</td><td>Lab chemical supplier</td><td>lobachemie.com</td></tr>
+          <tr class="india-row"><td>🇮🇳 CDH Fine Chemical</td><td>India (Delhi)</td><td>AR-grade CsF manufacturer</td><td><a href="https://www.cdhfinechemical.com/cesium-fluoride-ar">cdhfinechemical.com</a></td></tr>
+          <tr class="india-row"><td>🇮🇳 Otto Chemie Pvt. Ltd.</td><td>India (Mumbai)</td><td>99% and 99.9% grades</td><td><a href="https://www.ottokemi.com/cesium-compounds/cesium-fluoride-999-c-7092.aspx">ottokemi.com</a></td></tr>
+          <tr class="india-row"><td>🇮🇳 Sihauli Chemicals</td><td>India (Vasai)</td><td>CsF manufacturer & exporter</td><td><a href="https://www.sihaulichemicals.co.in/product-page/cesium-fluoride">sihaulichemicals.co.in</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05 -->
+<section id="s05" class="report-section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">Latest News & <em>Industry Intelligence</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th style="width:200px;">News Item</th><th>Summary & Market Impact</th><th>Source / Date</th></tr>
+          <tr><td>Grid Metals – Cesium Supply Agreement</td><td>Grid Metals Corp signed a cesium supply agreement with Tantalum Mining Corporation of Canada (Feb 2025) to potentially unlock 10,000 tonnes of processing at Tanco Plant — could diversify supply away from China monopoly.</td><td><span class="src"><a href="https://www.maximizemarketresearch.com/market-report/global-cesium-market/89395/">MaximizeMarketResearch — Jan 2026</a></span></td></tr>
+          <tr><td>Sinomine Expands Zimbabwe Smelting</td><td>Sinomine Resource Group investing in a new cesium smelting plant at Bikita Minerals in Zimbabwe, reinforcing China's dual-smelting monopoly over global cesium processing. Japan's cesium imports from Bikita have ceased since Sinomine takeover.</td><td><span class="src"><a href="https://chinaglobalsouth.com/analysis/china-cesium-supply-chain-dominance/">ChinaGlobalSouth — Jul 2025</a></span></td></tr>
+          <tr><td>Power Metals – Albemarle Offtake</td><td>Albemarle Corporation signed cesium concentrate offtake agreement with Power Metals for Case Lake project; prepayment of up to C$5 MN. Production target 2026. Cesium carbonate prices at ~US$219,000/tonne (SMM quote).</td><td><span class="src"><a href="https://finance.yahoo.com/news/lithium-royalty-corp-congratulates-power-201800323.html">Yahoo Finance — Dec 2025</a></span></td></tr>
+          <tr><td>USGS 2025: No Primary Cs Production</td><td>USGS confirms no official cesium production data in 2024. Global reserves < 200,000 tons (pollucite). Stockpiles may be depleted within few years. US 100% import reliant.</td><td><span class="src"><a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cesium.pdf">USGS MCS 2025</a></span></td></tr>
+          <tr><td>India PLI Scheme for APIs</td><td>India's production-linked incentive schemes for pharma APIs and semiconductor fabs will drive incremental demand for fluorination reagents including CsF. ISMC fab in Gujarat + multiple OSAT/ATMP plants planned.</td><td><span class="src">India MeitY / DPIIT policy announcements</span></td></tr>
+          <tr><td>India Fluorochemicals Market Growth</td><td>India fluorochemicals market valued at ~$622 MN (2022), growing at 10.2% CAGR. Navin Fluorine + Gujarat Fluorochemicals expanding capacity. Rising demand for specialty fluorination reagents.</td><td><span class="src"><a href="https://www.marknteladvisors.com/research-library/india-fluorochemicals-market.html">MarkNtel Advisors</a></span></td></tr>
+          <tr><td>China Export Controls Risk</td><td>China's Dec 2023 regulations on rare-earth-processing technology set precedent for potential future restrictions on cesium salts. Aerospace and defense sectors have begun stockpiling high-purity cesium compounds.</td><td><span class="src"><a href="https://www.mordorintelligence.com/industry-reports/cesium-market">Mordor Intelligence — Mar 2026</a></span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 06 -->
+<section id="s06" class="report-section">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <h2 class="section-title">Pricing <em>Intelligence</em></h2>
+  </div>
+
+  <div class="alert alert-warning">
+    ⚠️ <strong>Data Availability Alert:</strong> CsF is a specialty chemical with no public spot market. Pricing is typically obtained via RFQ from suppliers. The ranges below are assembled from Made-in-China listings, supplier catalogs, and industry estimates. Actual transaction prices vary significantly by purity, volume, and supplier relationship.
+  </div>
+
+  <div class="card">
+    <div class="card-header">Price by Quantity Scale</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Scale</th><th>Quantity</th><th>USD Range</th><th>INR Approx</th><th>Grade</th><th>Source</th></tr>
+          <tr><td>Lab / Reference</td><td>5–25 g</td><td>$30–120 per unit</td><td>₹2,500–10,000</td><td>99–99.9%</td><td><span class="src">Sigma-Aldrich, Alfa Aesar catalogs</span></td></tr>
+          <tr><td>CRO / Pilot</td><td>100 g – 1 kg</td><td>$50–150 per kg</td><td>₹4,200–12,500/kg</td><td>99%</td><td><span class="src">Supplier RFQ estimates</span></td></tr>
+          <tr><td>Bulk Commercial</td><td>100 kg – 1 MT</td><td>$5–15 per kg (FOB China)</td><td>₹420–1,250/kg</td><td>98–99%</td><td><span class="src"><a href="https://www.made-in-china.com/products-search/hot-china-products/Cesium_Fluoride_Price.html">Made-in-China listings</a></span></td></tr>
+          <tr><td>Ultra-High Purity</td><td>per kg</td><td>$50–200+ per kg</td><td>₹4,200–16,700/kg</td><td>99.99%</td><td><span class="src">Stanford Advanced Materials, American Elements</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Price Trends & India Cost Factors</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Factor</th><th>Details</th></tr>
+          <tr><td>Price Trend Direction</td><td><span class="tag tag-red">Rising</span> — Cesium supply constraints (USGS: stockpiles depleting), Cs₂CO₃ at ~$219,000/MT (SMM quote Dec 2025)</td></tr>
+          <tr class="india-row"><td>🇮🇳 India Import Duty</td><td>BCD ~10% + IGST 5% = ~15.5% total landed duty on HS 2827.60.90</td></tr>
+          <tr class="india-row"><td>🇮🇳 Logistics</td><td>Cold-chain not required (stable solid), but moisture-sensitive — desiccated packaging essential. Air freight for small quantities; sea freight for bulk.</td></tr>
+          <tr class="india-row"><td>🇮🇳 Currency Risk</td><td>INR/USD volatility adds 3–5% cost variance on imported cesium compounds.</td></tr>
+          <tr><td>Key Price Driver</td><td>Global cesium ore scarcity — Sinomine monopoly on processing; new projects (Power Metals Case Lake) may ease supply by 2027–28.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07 -->
+<section id="s07" class="report-section">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <h2 class="section-title">Regulatory, Licensing & <em>Compliance</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Global Regulatory Overview</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Country</th><th>Body</th><th>Classification</th><th>License Required</th><th>Key Restrictions</th></tr>
+          <tr class="india-row"><td>🇮🇳 India — CPCB</td><td>CPCB / MoEFCC</td><td>Not a hazardous waste constituent listed separately; handle as fluoride compound</td><td>CPCB HW authorization if stored in bulk</td><td>Fluoride effluent discharge limits apply</td></tr>
+          <tr class="india-row"><td>🇮🇳 India — DGFT Import</td><td>DGFT</td><td>Freely importable — IEC required</td><td>IEC + standard customs clearance</td><td>No specific import license for CsF</td></tr>
+          <tr class="india-row"><td>🇮🇳 India — DGFT Export</td><td>DGFT / SCOMET</td><td>Not on SCOMET list (non-radioactive Cs-133)</td><td>Standard export documentation</td><td>Radioactive cesium (Cs-137) is SCOMET-controlled; non-radioactive CsF is not</td></tr>
+          <tr class="india-row"><td>🇮🇳 India — CDSCO</td><td>CDSCO</td><td>Not a scheduled drug; used as pharma reagent/intermediate</td><td>Not required for CsF itself</td><td>End-product pharma use requires drug license</td></tr>
+          <tr class="india-row"><td>🇮🇳 India — Overall</td><td>—</td><td colspan="3"><strong>Summary: CsF is freely importable in India with standard IEC/customs procedures. No SCOMET or special license required for non-radioactive CsF. Handle as a toxic fluoride compound with appropriate workplace safety measures.</strong></td></tr>
+          <tr><td>🇺🇸 USA — EPA TSCA</td><td>EPA</td><td>Listed on TSCA 8(b) inventory</td><td>Standard TSCA compliance</td><td>No SNUR; not an RQ substance; not a HAP or ozone depletor</td></tr>
+          <tr><td>🇪🇺 EU — REACH/CLP</td><td>ECHA</td><td>Pre-registered under REACH; CLP hazard: H300, H310, H330, H314</td><td>REACH registration for >1 ton/year importers</td><td>Not SVHC; fatal if swallowed/inhaled/skin contact</td></tr>
+          <tr><td>🇨🇳 China — MEE</td><td>MEE / MIIT</td><td>Listed in China IECSC inventory</td><td>Standard chemical registration</td><td>China is a major producer; export controls possible (see News)</td></tr>
+          <tr><td>🇯🇵 Japan — METI</td><td>METI / MHLW (ENCS)</td><td>Class I designated chemical substance</td><td>ENCS notification for new importers</td><td>Requires hazard labeling and notification</td></tr>
+        </table>
+      </div>
+      <div class="alert alert-success" style="margin-top:14px;">
+        🇮🇳 <strong>India Regulatory Summary:</strong> Cesium fluoride (non-radioactive, CAS 13400-13-0) has no prohibitive regulatory barriers in India. It is freely importable under standard IEC, not SCOMET-controlled, and does not require CDSCO or FSSAI approvals. Standard fluoride-compound safety handling (PPE, ventilation, effluent treatment) applies per Factories Act and CPCB norms. The primary regulatory concern is workplace safety — CsF is toxic if ingested/inhaled and contact with acid generates highly toxic HF gas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 08 -->
+<section id="s08" class="report-section">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <h2 class="section-title">Potential Customers & <em>Target Companies</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header" style="background:#fff8e1; border-left-color:#f9a825; color:#e65100;">8A — Indian Target Companies</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Company</th><th>Segment + Location</th><th>Why a Target</th><th>Website</th></tr>
+          <tr class="india-row"><td>Navin Fluorine International</td><td>Fluorochemicals — Mumbai/Gujarat</td><td>India's premier fluorination company; uses multiple fluoride reagents for CDMO projects; CsF is a premium reagent in their toolkit</td><td>navinmolecular.com</td></tr>
+          <tr class="india-row"><td>Syngene International</td><td>CRO/CDMO — Bengaluru</td><td>Leading CRDMO; handles fluorinated drug intermediates for global innovators; consumes specialty fluorination reagents including CsF</td><td>syngeneintl.com</td></tr>
+          <tr class="india-row"><td>Divi's Laboratories</td><td>API/CDMO — Hyderabad</td><td>Major custom synthesis player; handles complex fluorinated APIs and intermediates requiring CsF-mediated reactions</td><td>divislabs.com</td></tr>
+          <tr class="india-row"><td>Laurus Labs</td><td>API/CDMO — Hyderabad/Vizag</td><td>Growing CDMO with complex chemistry capabilities; fluorinated compound synthesis for global pharma clients</td><td>lauruslabs.com</td></tr>
+          <tr class="india-row"><td>PI Industries</td><td>Agrochemicals — Udaipur/Gujarat</td><td>Leading agrochem CSM player; manufactures fluorinated pesticide/fungicide intermediates for global innovators</td><td>piindustries.com</td></tr>
+          <tr class="india-row"><td>Gujarat Fluorochemicals Ltd.</td><td>Fluorochemicals — Gujarat</td><td>Integrated fluorochemicals player; potential user of CsF in specialty applications and R&D</td><td>gfl.co.in</td></tr>
+          <tr class="india-row"><td>Hikal Ltd.</td><td>Pharma/Agrochem CDMO — Mumbai/Pune</td><td>CDMO handling complex heterocyclic chemistry; uses fluorination reagents for pharma and agrochem intermediates</td><td>hikal.com</td></tr>
+          <tr class="india-row"><td>Neuland Laboratories</td><td>API — Hyderabad</td><td>Specialty API manufacturer with complex chemistry capabilities; potential CsF user for fluorinated NCEs</td><td>neulandlabs.com</td></tr>
+          <tr class="india-row"><td>Loba Chemie Pvt. Ltd.</td><td>Lab chemicals — Mumbai</td><td>Distributor of lab-grade CsF; potential for exclusive distribution or toll-manufacturing partnership</td><td>lobachemie.com</td></tr>
+          <tr class="india-row"><td>Piramal Pharma (CRO/CDMO)</td><td>Pharma CDMO — Mumbai/Ahmedabad</td><td>Global CDMO with discovery chemistry; uses specialty reagents for complex molecule synthesis</td><td>piramal.com</td></tr>
+          <tr class="india-row"><td>SRF Ltd. (Specialty Chemicals)</td><td>Specialty fluorochemicals — Bhiwadi/Gujarat</td><td>Growing specialty chemicals business with fluorination capabilities; potential CsF procurement for agrochemical intermediates</td><td>srf.com</td></tr>
+          <tr class="india-row"><td>IIT/IISc Research Institutions</td><td>Academic R&D — Pan-India</td><td>Consistent low-volume, high-margin demand for research-grade CsF across organic chemistry, materials science, and catalysis labs</td><td>Various</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">8B — Global Target Companies</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Company</th><th>Country</th><th>Segment</th><th>Why a Target</th></tr>
+          <tr><td>Pfizer Inc.</td><td>🇺🇸 USA</td><td>Big Pharma</td><td>Major consumer of fluorination reagents for drug synthesis pipelines; ~30% of Pfizer drugs contain fluorine</td></tr>
+          <tr><td>Merck KGaA (EMD Millipore)</td><td>🇩🇪 Germany</td><td>Pharma + Lab Chemicals</td><td>Both user and distributor of CsF; substantial R&D consumption</td></tr>
+          <tr><td>BASF SE</td><td>🇩🇪 Germany</td><td>Specialty Chemicals</td><td>Uses CsF as catalyst/reagent in specialty synthesis programs</td></tr>
+          <tr><td>Syngenta Group</td><td>🇨🇭 Switzerland</td><td>Agrochemicals</td><td>Major agrochemical innovator; fluorinated crop protection molecules require CsF as reagent</td></tr>
+          <tr><td>Lonza Group</td><td>🇨🇭 Switzerland</td><td>CDMO</td><td>Leading global CDMO handling complex fluorinated pharma intermediates</td></tr>
+          <tr><td>WuXi AppTec</td><td>🇨🇳 China</td><td>CRO/CDMO</td><td>Largest Asian CDMO; massive consumption of fluorination reagents for global pharma clients</td></tr>
+          <tr><td>AGC Inc. (Asahi Glass)</td><td>🇯🇵 Japan</td><td>Fluorochemicals/Glass</td><td>Uses CsF in specialty glass and optical coating applications</td></tr>
+          <tr><td>Corning Incorporated</td><td>🇺🇸 USA</td><td>Specialty Glass/Optics</td><td>CsF in optical coatings and advanced glass formulations</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 09 -->
+<section id="s09" class="report-section">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <h2 class="section-title">Strategic Business <em>Frameworks</em></h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">9A — SWOT Analysis</div>
+    <div class="card-body">
+      <div class="swot-grid">
+        <div class="swot-cell swot-s"><h4>Strengths</h4><ul><li>India's strong pharma/CDMO infrastructure creates natural demand base</li><li>Established fluorochemical companies (Navin Fluorine, GFL) provide ecosystem</li><li>HF and downstream chemistry expertise domestically available</li><li>Low manufacturing complexity for CsF synthesis (acid-base reaction)</li></ul></div>
+        <div class="swot-cell swot-w"><h4>Weaknesses</h4><ul><li>Zero domestic cesium ore — 100% raw material import dependency</li><li>Small market volume (specialty, not commodity)</li><li>Limited existing customer awareness vs TBAF/KF alternatives</li><li>Hygroscopic handling adds packaging/logistics cost</li></ul></div>
+        <div class="swot-cell swot-o"><h4>Opportunities</h4><ul><li>India PLI scheme driving API/intermediate localization — fluorinated APIs growing</li><li>Semiconductor fab investments (Gujarat, Karnataka) will need CsF for thin-film deposition</li><li>China export control risk → India can position as alternate CsF redistribution hub for APAC</li><li>New cesium mines (Power Metals, Grid Metals) diversifying supply from 2026–28</li></ul></div>
+        <div class="swot-cell swot-t"><h4>Threats</h4><ul><li>China controls >60% of cesium refining — supply weaponization risk</li><li>USGS warns stockpiles may deplete in few years — price spikes likely</li><li>Substitutes (KF, TBAF, CsOH) usable in some applications</li><li>Geopolitical tensions affecting cesium supply chain (Zimbabwe, Canada-China axis)</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">9B — Porter's Five Forces</div>
+    <div class="card-body">
+      <div class="porter-grid">
+        <div class="porter-card"><div class="porter-top porter-med"><div class="porter-tag">Medium</div></div><div class="porter-body"><h4>Competitive Rivalry</h4><p>Limited number of CsF suppliers globally; niche product with moderate competition. Sigma-Aldrich, American Elements, Stanford AM dominate research grades.</p></div></div>
+        <div class="porter-card"><div class="porter-top porter-high"><div class="porter-tag">High</div></div><div class="porter-body"><h4>Supplier Power</h4><p>Extremely high — cesium supply controlled by Sinomine (China). Pollucite ore is geologically scarce. Suppliers can dictate pricing. No spot market exists.</p></div></div>
+        <div class="porter-card"><div class="porter-top porter-low"><div class="porter-tag">Low</div></div><div class="porter-body"><h4>Threat of New Entrants</h4><p>Low — cesium ore access is the fundamental barrier. New CsF synthesizers can emerge, but raw material sourcing is the chokepoint.</p></div></div>
+        <div class="porter-card"><div class="porter-top porter-med"><div class="porter-tag">Medium</div></div><div class="porter-body"><h4>Buyer Power</h4><p>Medium — buyers (pharma, R&D) have limited alternatives for CsF-specific reactions. Can substitute KF/TBAF in some cases but not all.</p></div></div>
+        <div class="porter-card"><div class="porter-top porter-med"><div class="porter-tag">Medium</div></div><div class="porter-body"><h4>Threat of Substitutes</h4><p>Medium — KF is cheaper but less reactive; TBAF is hygroscopic; CsOH can substitute in some base applications. CsF remains preferred for specific fluorinations.</p></div></div>
+      </div>
+      <div class="prop-grid" style="margin-top:16px;">
+        <div class="prop-item"><div class="prop-label">Overall Attractiveness</div><div class="prop-value"><span class="tag tag-amber">MODERATE</span> — High supplier power is the key risk. Niche market with steady demand but supply chain vulnerability.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">9C — Value Chain Analysis</div>
+    <div class="card-body">
+      <div class="vc-flow">
+        <div class="vc-step vc-inactive">Raw Material (Pollucite Ore)</div>
+        <div class="vc-step vc-inactive">Cs Compound Refining</div>
+        <div class="vc-step vc-active">Sourcing / Import</div>
+        <div class="vc-step vc-active">Quality Testing</div>
+        <div class="vc-step vc-active">Distribution</div>
+        <div class="vc-step vc-active">Export</div>
+        <div class="vc-step vc-active">End Customer</div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Stage</th><th>Our Participation?</th><th>Opportunity</th><th>Timeline</th></tr>
+          <tr><td>Raw Material (Mining)</td><td><span class="tag tag-red">No</span></td><td>No domestic cesium ore; not viable</td><td>N/A</td></tr>
+          <tr><td>Cs Compound Refining</td><td><span class="tag tag-amber">Potential</span></td><td>Toll synthesis from imported Cs₂CO₃ + domestic HF</td><td>Year 2–3</td></tr>
+          <tr><td>Sourcing / Import</td><td><span class="tag tag-green">Yes</span></td><td>Primary mode — import CsF from China/US and distribute domestically</td><td>Month 1–3</td></tr>
+          <tr><td>Quality Testing</td><td><span class="tag tag-green">Yes</span></td><td>Purity verification, CoA issuance, repackaging in India-standard packaging</td><td>Month 1–3</td></tr>
+          <tr><td>Distribution</td><td><span class="tag tag-green">Yes</span></td><td>Supply to pharma CDMO, CRO, R&D labs across India</td><td>Month 1–6</td></tr>
+          <tr><td>Export</td><td><span class="tag tag-green">Yes</span></td><td>Re-export to APAC, Middle East, Africa — leverage India as redistribution hub</td><td>Month 6–12</td></tr>
+          <tr><td>End Customer</td><td><span class="tag tag-green">Yes</span></td><td>Direct sales to key accounts (Syngene, Divi's, Navin Fluorine etc.)</td><td>Ongoing</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10 -->
+<section id="s10" class="report-section">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2 class="section-title">Feasibility Summary & <em>Recommendation</em></h2>
+  </div>
+
+  <div class="verdict-box verdict-conditional">
+    <h3>VERDICT: CONDITIONAL — RECOMMENDED FOR IMPORT & TRADING</h3>
+    <p>Cesium fluoride presents a viable but niche opportunity for India-centric specialty chemical trading. The product has steady demand from pharma/CDMO and growing demand from semiconductor/optics sectors. However, extreme supply concentration (China/Canada monopoly on cesium ore) creates significant raw material risk. We recommend entering via import & domestic distribution initially, with potential for toll-manufacturing in Phase 2 once supply agreements are secured.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Recommended Business Modes</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Business Mode</th><th>Recommendation</th><th>Rationale</th></tr>
+          <tr><td>Import & Domestic Trading</td><td><span class="tag tag-green">RECOMMENDED</span></td><td>Fastest market entry; source from China/US suppliers, distribute to Indian pharma CDMO and R&D labs. Low capex, high margin on specialty grades.</td></tr>
+          <tr><td>Sourcing & Marketing</td><td><span class="tag tag-green">RECOMMENDED</span></td><td>Build relationships with Chinese bulk suppliers (Jiangxi Dongpeng) + US high-purity suppliers (American Elements). Position as India's CsF specialist.</td></tr>
+          <tr><td>CRO/R&D Support</td><td><span class="tag tag-blue">EXPLORE</span></td><td>Supply research-grade CsF + application support to academic labs and CROs. Premium pricing (5–10x bulk) on small packs.</td></tr>
+          <tr><td>Export (Re-export)</td><td><span class="tag tag-blue">EXPLORE</span></td><td>Leverage India as redistribution hub for APAC/Middle East/Africa. Value-add: quality certification, smaller pack sizes, local currency invoicing.</td></tr>
+          <tr><td>Manufacturing (Toll Synthesis)</td><td><span class="tag tag-amber">CONDITIONAL</span></td><td>Feasible only with secured Cs₂CO₃ supply agreement. India has HF + infrastructure. Evaluate in Year 2 after market establishment.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Key Risks to Monitor</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>
+          <tr><td>Cesium supply disruption (China export controls)</td><td><span class="tag tag-red">HIGH</span></td><td>Diversify suppliers — include US (American Elements), Japan (GODO SHIGEN); monitor Power Metals/Grid Metals for new supply entry</td></tr>
+          <tr><td>Price volatility (Cs₂CO₃ at $219K/MT)</td><td><span class="tag tag-red">HIGH</span></td><td>Hedge with forward contracts; maintain 3–6 month inventory buffer; pass-through pricing to customers</td></tr>
+          <tr><td>Substitution by KF/TBAF in some applications</td><td><span class="tag tag-amber">MEDIUM</span></td><td>Focus on applications where CsF is irreplaceable (specific fluorinations, Suzuki coupling); provide application support</td></tr>
+          <tr><td>Small market volume limits scalability</td><td><span class="tag tag-amber">MEDIUM</span></td><td>Portfolio approach — add other cesium compounds (CsCl, Cs₂CO₃, CsI) to build a cesium-compounds product line</td></tr>
+          <tr><td>Regulatory changes (India SCOMET or China export)</td><td><span class="tag tag-amber">MEDIUM</span></td><td>Maintain regulatory monitoring; build inventory ahead of anticipated restrictions</td></tr>
+          <tr><td>Moisture damage in storage/transit</td><td><span class="tag tag-green">LOW</span></td><td>Desiccated packaging, inert gas blanket for high-purity grades; controlled storage at 2–10°C</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Suggested Next Steps</div>
+    <div class="card-body">
+      <div class="steps-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>Month 1–2: Supplier Engagement</h4><p>Send RFQs to 5+ CsF suppliers (China bulk + US high-purity). Negotiate trial quantities (10–50 kg). Establish payment and logistics terms.</p></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>Month 2–3: Customer Discovery</h4><p>Contact top 10 Indian targets (Navin Fluorine, Syngene, Divi's, PI Industries). Present product catalog + pricing. Obtain trial orders.</p></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>Month 3–4: Regulatory & Import Setup</h4><p>Confirm HS code with customs broker. Set up import logistics pipeline (air + sea freight). Establish quality testing protocol (purity, moisture, metal content).</p></div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>Month 4–6: First Shipments & Sales</h4><p>Execute first import shipments. Deliver trial quantities to customers. Build CoA documentation and customer confidence.</p></div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>Month 6–12: Scale & Diversify</h4><p>Expand to cesium compound portfolio (CsCl, Cs₂CO₃, CsI). Explore re-export to APAC/ME. Evaluate toll-manufacturing feasibility with Indian HF producers.</p></div></div>
+        <div class="step-item"><div class="step-num">6</div><div class="step-content"><h4>Year 2: Strategic Review</h4><p>Assess supply chain stability (new mines coming online?). Evaluate manufacturing entry. Consider exclusive distribution agreements with key suppliers.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="refs" class="report-section">
+  <div class="section-header">
+    <div class="section-num">R</div>
+    <h2 class="section-title">Sources & <em>References</em></h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <ol class="ref-list">
+        <li>PubChem — Cesium Fluoride CID 25953 <a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cesium-fluoride">pubchem.ncbi.nlm.nih.gov</a></li>
+        <li>Sigma-Aldrich — Cesium Fluoride Product Page <a href="https://www.sigmaaldrich.com/US/en/substance/cesiumfluoride1519013400130">sigmaaldrich.com</a></li>
+        <li>NIST WebBook — Caesium Fluoride <a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=13400-13-0">webbook.nist.gov</a></li>
+        <li>Wikipedia — Caesium Fluoride <a href="https://en.wikipedia.org/wiki/Caesium_fluoride">en.wikipedia.org</a></li>
+        <li>CommonOrganicChemistry — CsF Reagent Profile <a href="https://commonorganicchemistry.com/Common_Reagents/Cesium_Fluoride/Cesium_Fluoride.htm">commonorganicchemistry.com</a></li>
+        <li>Wiley — Encyclopedia of Reagents for Organic Synthesis: Cesium Fluoride <a href="https://onlinelibrary.wiley.com/doi/10.1002/047084289X.rc050.pub2">onlinelibrary.wiley.com</a></li>
+        <li>24ChemicalResearch — Global CsF Market Forecast 2024–2030 <a href="https://www.24chemicalresearch.com/blog/747/global-cesium-fluoride-forecast-edition-market">24chemicalresearch.com</a></li>
+        <li>Dataintelo — Cesium Fluoride Market Report 2025–2033 <a href="https://dataintelo.com/report/cesium-fluoride-industry">dataintelo.com</a></li>
+        <li>Verified Market Reports — CsF Sputtering Target Market <a href="https://www.verifiedmarketreports.com/product/cesium-fluoride-sputtering-target-market/">verifiedmarketreports.com</a></li>
+        <li>USGS — Mineral Commodity Summaries 2025: Cesium <a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cesium.pdf">pubs.usgs.gov</a></li>
+        <li>USGS — Mineral Commodity Summaries 2024: Cesium <a href="https://pubs.usgs.gov/periodicals/mcs2024/mcs2024-cesium.pdf">pubs.usgs.gov</a></li>
+        <li>ChinaGlobalSouth — China Cesium Supply Chain Dominance <a href="https://chinaglobalsouth.com/analysis/china-cesium-supply-chain-dominance/">chinaglobalsouth.com</a></li>
+        <li>Maximize Market Research — Global Cesium Market 2025–2032 <a href="https://www.maximizemarketresearch.com/market-report/global-cesium-market/89395/">maximizemarketresearch.com</a></li>
+        <li>Yahoo Finance — Lithium Royalty / Power Metals Cesium Offtake <a href="https://finance.yahoo.com/news/lithium-royalty-corp-congratulates-power-201800323.html">finance.yahoo.com</a></li>
+        <li>Mordor Intelligence — Cesium Market 2025–2031 <a href="https://www.mordorintelligence.com/industry-reports/cesium-market">mordorintelligence.com</a></li>
+        <li>MarkNtel Advisors — India Fluorochemicals Market 2024–2029 <a href="https://www.marknteladvisors.com/research-library/india-fluorochemicals-market.html">marknteladvisors.com</a></li>
+        <li>American Elements — Cesium Fluoride Product Page <a href="https://www.americanelements.com/cesium-fluoride-13400-13-0">americanelements.com</a></li>
+        <li>Stanford Advanced Materials — CsF Powder <a href="https://www.samaterials.com/cesium-fluoride-csf.html">samaterials.com</a></li>
+        <li>Metoree — 17 Cesium Fluoride Manufacturers 2025 <a href="https://us.metoree.com/categories/6442/">us.metoree.com</a></li>
+        <li>SYNTHETIKA — CsF Properties & Applications <a href="https://synthetikaeu.com/en_US/p/Cesium-fluoride-Pure/7703">synthetikaeu.com</a></li>
+        <li>ChemicalBook — Caesium Fluoride CAS 13400-13-0 <a href="https://www.chemicalbook.com/ChemicalProductProperty_EN_CB5122877.htm">chemicalbook.com</a></li>
+        <li>Santa Cruz Biotechnology — CsF Product Info <a href="https://www.scbt.com/p/cesium-fluoride-13400-13-0">scbt.com</a></li>
+        <li>CDH Fine Chemical India — CsF AR Grade <a href="https://www.cdhfinechemical.com/cesium-fluoride-ar">cdhfinechemical.com</a></li>
+        <li>Sihauli Chemicals India — CsF Manufacturer <a href="https://www.sihaulichemicals.co.in/product-page/cesium-fluoride">sihaulichemicals.co.in</a></li>
+        <li>Otto Chemie India — CsF 99.9% <a href="https://www.ottokemi.com/cesium-compounds/cesium-fluoride-999-c-7092.aspx">ottokemi.com</a></li>
+        <li>SFA Oxford — The Cesium Market <a href="https://www.sfa-oxford.com/rare-earths-and-minor-metals/minor-metals-and-minerals/cesium-market-and-cesium-price-drivers/">sfa-oxford.com</a></li>
+        <li>Made-in-China — CsF Price Listings <a href="https://www.made-in-china.com/products-search/hot-china-products/Cesium_Fluoride_Price.html">made-in-china.com</a></li>
+        <li>Navin Molecular — Fluorination Capabilities <a href="https://navinmolecular.com/fluorination/">navinmolecular.com</a></li>
+        <li>Power Metals Corp — Cesium Market Info <a href="https://powermetalscorp.com/investors/cesium/">powermetalscorp.com</a></li>
+        <li>EPA Substance Registry — CsF <a href="https://cdxapps.epa.gov/oms-substance-registry-services/substance-details/185827">cdxapps.epa.gov</a></li>
+        <li>MSDS — Cesium Fluoride Safety Data <a href="https://wiki.nanofab.ucsb.edu/w/images/0/0d/Cesium_Fluoride_MSDS.pdf">nanofab.ucsb.edu</a></li>
+        <li>Dataintelo — Rubidium Cesium & Compounds Market 2034 <a href="https://dataintelo.com/report/global-rubidium-cesium-and-compounds-market">dataintelo.com</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <p><strong>🔒 CONFIDENTIAL — Internal Management Use Only</strong></p>
+  <p>Prepared by: Market Intelligence | Report Date: June 2026 | Report Type: Secondary Market Research — No Trade Data</p>
+  <p>Based on publicly available secondary research. Market size estimates from third-party sources may vary. Not investment or financial advice. All data points sourced inline; see References section for full source list.</p>
+  <p style="margin-top:10px;">For best PDF navigation (clickable TOC links), open PDF in Adobe Acrobat or Chrome PDF viewer. Use File → Print → Save as PDF in Chrome for PDF export.</p>
+</div>
+
+</main>
+
+<script>
+// Sidebar active section highlighting
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = document.querySelectorAll('.report-section, .hero');
+  const navLinks = document.querySelectorAll('.nav-link[data-section]');
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(function(section) { observer.observe(section); });
+});
+</script>
+
+</body>
+</html>
